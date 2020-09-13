@@ -27,7 +27,7 @@ The recommended way to install the SDK through
 [Composer](https://getcomposer.org/). Note that the SDK requires 
 ```php
 "php":">=7.2",
-"logdo/logdo-laravel": "dev-master"
+"logdo/logdo-php": "dev-master"
 ```
 
 Seriously, because why not? php5.6 is so 2016. I was't even writing php back then!
