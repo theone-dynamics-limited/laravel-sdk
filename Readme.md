@@ -36,6 +36,10 @@ Seriously, because why not? php5.6 is so 2016. I was't even writing php back the
 composer require logdo/logdo-laravel
 ```
 
+## Credit
+
+This is heavily inspire by Laravel Telecope. Credit to Taylor Otwell and Muhamed Said for putting together such a wonderful package.
+
 ## Contributing
 
 Contributions are welcome in any form.
