@@ -20,7 +20,7 @@
     },
     "require": {
         "php":">=7.2",
-        "illuminate/support": "^5.5.0",
+        "illuminate/support": ">=5.5.0",
         "logdo/logdo-php": "1.0.1"
     },
     "require-dev": {},
