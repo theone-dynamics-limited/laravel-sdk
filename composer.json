@@ -9,7 +9,7 @@
             "email": "ambrosemwaka@gmail.com"
         }
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "autoload": {
         "psr-4": {"Logdo\\": "src/"}
     },
@@ -21,7 +21,7 @@
     "require": {
         "php":">=7.2",
         "illuminate/support": "^5.5.0",
-        "logdo/logdo-php": "dev-master"
+        "logdo/logdo-php": "1.0.1"
     },
     "require-dev": {},
     "extra": {

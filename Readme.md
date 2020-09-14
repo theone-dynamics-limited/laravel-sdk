@@ -21,7 +21,7 @@ We use GitHub issues only to discuss bugs and new features. For support please r
 - [Documentation](http://logdo.dev/docs)
 
 
-## Installing Logdo php SDK
+## Installing Logdo laravel SDK
 
 The recommended way to install the SDK through
 [Composer](https://getcomposer.org/). Note that the SDK requires 
@@ -35,6 +35,13 @@ Seriously, because why not? php5.6 is so 2016. I was't even writing php back the
 ```bash
 composer require logdo/logdo-laravel
 ```
+
+Publish the config file
+```bash
+php artisan vendor:publish --tag=config
+```
+
+The config `logdo.php` will be published into your config/ directory. We encourage you to take a look at it and make the necessary adjustments.
 
 ## Credit
 

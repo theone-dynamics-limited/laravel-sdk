@@ -1,6 +1,7 @@
 <?php
 namespace Logdo\Watchers;
 
+use Log;
 use Exception;
 use Logdo\Logdo;
 use Logdo\Watcher;
@@ -37,6 +38,22 @@ class LogWatcher extends Watcher
         //     'message' => (string) $event->message,
         //     'context' => Arr::except($event->context, ['logdo']),
         // ]
+
+        // TODO MA - Do these in a Job/Queue?
+        
+        $app_id = config('logdo.app_id');
+        $api_token = config('logdo.api_token');
+        $backend_base_url = config('logdo.backend_base_url');
+
+        $logdo = Logdo::createInstance($api_token, $app_id)
+            ->log((string)$event->message)
+            ->to($backend_base_url)
+            ->as($event->level);
+        
+        if (!$logdo->wasSuccessful()) {
+            // Throw exception?
+            Log::info(['Logdo' => $logdo->getErrorMessage()]);
+        }
     }
 
     /**
