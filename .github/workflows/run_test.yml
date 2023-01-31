@@ -1,4 +1,4 @@
-name: run-tests
+name: php_versions_compatibilty_and_tests
 
 on: [push, pull_request]
 

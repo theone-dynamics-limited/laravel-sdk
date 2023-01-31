@@ -1,6 +1,6 @@
 ![Logdo](.github/logo.png?raw=true)
 
-# Logdo, Laravel SDK
+# Logdo, Laravel SDK | ![Tests](https://github.com/logdo/laravel-sdk/actions/workflows/php_versions_compatibilty_and_tests.yml/badge.svg)
 
 LogDo: You production logs, exactly like you are used to them on your local 🥳
 
