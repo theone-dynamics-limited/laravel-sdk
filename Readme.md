@@ -2,7 +2,7 @@
 
 # Logdo, Laravel SDK
 
-Logdo is a self hosted application logging server that brings back the fun in reading logs.
+LogDo: You production logs, exactly like you are used to them on your local 🥳
 
 - Simple interface for viewing logs
 - App based logging setup
@@ -23,14 +23,7 @@ We use GitHub issues only to discuss bugs and new features. For support please r
 
 ## Installing Logdo laravel SDK
 
-The recommended way to install the SDK through
-[Composer](https://getcomposer.org/). Note that the SDK requires 
-```php
-"php":">=7.2",
-"logdo/logdo-php": "dev-master"
-```
-
-Seriously, because why not? php5.6 is so 2016. I was't even writing php back then!
+The recommended way to install the SDK through [Composer](https://getcomposer.org/)
 
 ```bash
 composer require logdo/logdo-laravel
@@ -51,3 +44,7 @@ This is heavily inspire by Laravel Telecope. Credit to Taylor Otwell and Muhamed
 
 Contributions are welcome in any form.
 
+
+## Bug and Security Report
+
+Report and bugs and security issue to `theguys@theoneapp.rocks`

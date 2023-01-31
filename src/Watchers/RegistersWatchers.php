@@ -1,14 +1,18 @@
 <?php
-namespace Logdo\Watchers;
+namespace LogdoPhp\Watchers;
 
 trait RegistersWatchers
 {
     /**
      * The class names of the registered watchers.
+     * Add more watchers here
      *
      * @var array
      */
-    protected static $watchers = [];
+    protected static $watchers = [
+        LogWatcher::class => true,
+        // ... add more here
+    ];
 
     /**
      * Determine if a given watcher has been registered.
@@ -29,24 +33,17 @@ trait RegistersWatchers
      */
     protected static function registerWatchers($app)
     {
-        foreach (config('logdo.watchers') as $key => $watcher) {
-            // Register all watchers defined in the config
-            // and check if its enabled. If its not, then
-            // skip it.
+        foreach (static::$watchers as $key => $watcher) {
             if (is_string($key) && $watcher === false) {
                 continue;
             }
-
             if (is_array($watcher) && ! ($watcher['enabled'] ?? true)) {
                 continue;
             }
-
             $watcher = $app->make(is_string($key) ? $key : $watcher, [
                 'options' => is_array($watcher) ? $watcher : [],
             ]);
-
             static::$watchers[] = get_class($watcher);
-
             $watcher->register($app);
         }
     }

@@ -1,11 +1,12 @@
 <?php
-namespace Logdo\Watchers;
+namespace LogdoPhp\Watchers;
 
-use Log;
-use Exception;
-use Logdo\Logdo;
-use Logdo\Watcher;
+use Throwable;
+use Illuminate\Support\Arr;
+use LogdoPhp\Watchers\Watcher;
 use Illuminate\Log\Events\MessageLogged;
+use LogdoPhp\Exceptions\LogdoException;
+use LogdoPhp\Jobs\SendLogToLoggingService;
 
 class LogWatcher extends Watcher
 {
@@ -26,47 +27,39 @@ class LogWatcher extends Watcher
      * @param  \Illuminate\Log\Events\MessageLogged  $event
      * @return void
      */
-    public function recordLog(MessageLogged $event)
+    public function recordLog($event)
     {
-        if ($this->shouldIgnore($event)) {
-            return;
+        $exception_log = [];
+
+        if (!empty($event->context)) {
+            $exception = $event->context['exception'];
+            if (isset($exception)) {
+                $trace = collect($exception->getTrace())->map(function ($item) {
+                    return Arr::only($item, ['file', 'line']);
+                })->toArray();
+        
+                $exception_log = [
+                    'class' => get_class($exception),
+                    'file' => $exception->getFile(),
+                    'line' => $exception->getLine(),
+                    'message' => $exception->getMessage(),
+                    'context' => transform(Arr::except($event->context, ['exception', 'telescope']), function ($context) {
+                        return ! empty($context) ? $context : null;
+                    }),
+                    'trace' => $trace,
+                ];
+            }
         }
 
+        if (empty(config('logdo.app_id'))) {
+            throw new LogdoException("You need to configure your app id in config/logdo.php");
+        }
+
+        if (empty(config('logdo.api_token'))) {
+            throw new LogdoException("You need to configure your API TOKEN in config/logdo.php");
+        }
+        
         // Send log to server here
-        // [
-        //     'level' => $event->level,
-        //     'message' => (string) $event->message,
-        //     'context' => Arr::except($event->context, ['logdo']),
-        // ]
-
-        // TODO MA - Do these in a Job/Queue?
-        
-        $app_id = config('logdo.app_id');
-        $api_token = config('logdo.api_token');
-        $backend_base_url = config('logdo.backend_base_url');
-
-        $logdo = Logdo::createInstance($api_token, $app_id)
-            ->log((string)$event->message)
-            ->to($backend_base_url)
-            ->as($event->level);
-        
-        if (!$logdo->wasSuccessful()) {
-            // Throw exception?
-            Log::info(['Logdo' => $logdo->getErrorMessage()]);
-        }
-    }
-
-    /**
-     * Determine if the event should be ignored.
-     *
-     * @param  mixed  $event
-     * @return bool
-     */
-    private function shouldIgnore($event)
-    {
-        // TODO MA
-        // Define logged event that should be ignored then check them
-        return isset($event->context['exception']) &&
-            $event->context['exception'] instanceof Exception;
+        SendLogToLoggingService::dispatch($event->level, $event->message, $exception_log);
     }
 }

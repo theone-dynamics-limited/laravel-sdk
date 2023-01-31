@@ -1,7 +1,7 @@
 <?php
-namespace Logdo;
+namespace LogdoPhp;
 
-use Logdo\Logdo;
+use LogdoPhp\Logdo;
 use Illuminate\Support\ServiceProvider;
 
 class LogdoServiceProvider extends ServiceProvider

@@ -1,7 +1,7 @@
 <?php
-namespace Logdo;
+namespace LogdoPhp;
 
-use Logdo\Watchers\RegistersWatchers;
+use LogdoPhp\Watchers\RegistersWatchers;
 
 class LogdoEntry
 {

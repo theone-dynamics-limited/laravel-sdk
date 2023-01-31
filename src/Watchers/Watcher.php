@@ -1,5 +1,5 @@
 <?php
-namespace Logdo;
+namespace LogdoPhp\Watchers;
 
 abstract class Watcher
 {
