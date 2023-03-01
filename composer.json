@@ -19,7 +19,7 @@
         }
     },
     "require": {
-        "illuminate/support": "^8.0",
+        "illuminate/support": "^10.0.0",
         "logdo/logdo-php": "^2.0.0"
     },
     "require-dev": {
